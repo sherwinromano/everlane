@@ -1,0 +1,306 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_hero_xGRVJV": {
+      "type": "custom-hero",
+      "name": "Hero",
+      "settings": {
+        "heading": "Your Cozy Era",
+        "subheading": "<p>Get peak comfy-chic with new winter essentials.</p>",
+        "button_label": "Shop Now",
+        "button_link": "shopify://collections/asset-pack-51556548610-example-products",
+        "content_alignment": "left",
+        "image": "shopify://shop_images/hero-image.webp",
+        "enable_overlay": true,
+        "overlay_opacity": 35
+      }
+    },
+    "shop_by_category_fhcVCW": {
+      "type": "shop-by-category",
+      "blocks": {
+        "category_D8HqRJ": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/man-adjusts-blue-tuxedo-bowtie_925x_1df45890-aa98-42a5-9149-6c54e4471823.jpg",
+            "label": "Tuxedo",
+            "link": "shopify://collections/everlane-men"
+          }
+        },
+        "category_fnGXib": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/leather-jacket-and-tea_925x_82d1221e-a084-4113-94c0-af75db13a011.jpg",
+            "label": "Jacket",
+            "link": "shopify://collections/everlane-women"
+          }
+        },
+        "category_NdzxpG": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/red-plaid-shirt_925x_ec457107-c5a7-4fb7-8cd0-29273d29eb2f.jpg",
+            "label": "Shirt",
+            "link": "shopify://collections/everlane-men"
+          }
+        },
+        "category_eg8C9b": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/black-bag-over-the-shoulder_925x_61e63fc0-9396-4012-bd2d-91868d50c60f.jpg",
+            "label": "Bag",
+            "link": "shopify://collections/everlane-women"
+          }
+        }
+      },
+      "block_order": [
+        "category_D8HqRJ",
+        "category_fnGXib",
+        "category_NdzxpG",
+        "category_eg8C9b"
+      ],
+      "name": "Shop by Category",
+      "settings": {
+        "heading": "Shop by Category"
+      }
+    },
+    "promo_banner_zizpLm": {
+      "type": "promo-banner",
+      "blocks": {
+        "banner_card_VTLPkt": {
+          "type": "banner_card",
+          "settings": {
+            "image": "shopify://shop_images/putting-on-your-shoes_925x_cc668cce-331e-4eee-af8c-077adc474728.jpg",
+            "title": "New Arrivals",
+            "cta_text": "Shop the Latest",
+            "link": "shopify://collections/everlane-men"
+          }
+        },
+        "banner_card_hjAtYN": {
+          "type": "banner_card",
+          "settings": {
+            "image": "shopify://shop_images/womens-red-t-shirt_925x_32d1a748-b7c5-4db1-bf9a-f79cd7499206.jpg",
+            "title": "Best-Sellers",
+            "cta_text": "Shop Your Favorites",
+            "link": "shopify://collections/everlane-women"
+          }
+        },
+        "banner_card_DFJzcb": {
+          "type": "banner_card",
+          "settings": {
+            "image": "shopify://shop_images/woman-in-the-city_925x_3bc3775b-e80c-468f-9b8f-2430ce6c58d0.jpg",
+            "title": "The Holiday Outfit",
+            "cta_text": "Shop Occasion",
+            "link": "shopify://collections/everlane-women"
+          }
+        }
+      },
+      "block_order": [
+        "banner_card_VTLPkt",
+        "banner_card_hjAtYN",
+        "banner_card_DFJzcb"
+      ],
+      "name": "Promo Banner",
+      "settings": {}
+    },
+    "mission_banner_4jQPnU": {
+      "type": "mission-banner",
+      "name": "Mission Banner",
+      "settings": {
+        "image": "shopify://shop_images/mission-img.png",
+        "heading": "We're on a Mission To Clean Up the Industry",
+        "subtext": "Read about our progress in our latest Impact Report.",
+        "cta_text": "Learn More",
+        "cta_url": "/"
+      }
+    },
+    "product_carousel_wCpcRp": {
+      "type": "product-carousel",
+      "name": "Product Carousel",
+      "settings": {
+        "heading": "Everlane Favorites",
+        "subtext": "Beautifully Functional. Purposefully Designed. Consciously Crafted.",
+        "collection": "everlane-favorites",
+        "products_per_page": 10
+      }
+    },
+    "testimonials_BD39tJ": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_QJmkYe": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Love this suit! Fits perfectly and the fabric is thick without being stiff.",
+            "reviewer_name": "John Doe",
+            "product_name": "Blue Silk Tuxedo",
+            "product_url": "shopify://products/blue-silk-tuxedo",
+            "image": "shopify://shop_images/man-adjusts-blue-tuxedo-bowtie_925x_1df45890-aa98-42a5-9149-6c54e4471823.jpg"
+          }
+        },
+        "testimonial_xwdGgd": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "This top is just right. Will definitely be buying another colors soon.",
+            "reviewer_name": "Sarah Doe",
+            "product_name": "Striped Skirt and Top",
+            "product_url": "shopify://products/striped-skirt-and-top",
+            "image": "shopify://shop_images/woman-in-the-city_925x_3bc3775b-e80c-468f-9b8f-2430ce6c58d0.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_QJmkYe",
+        "testimonial_xwdGgd"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "label": "People Are Talking"
+      }
+    },
+    "editorial_cards_Tc7kEk": {
+      "type": "editorial-cards",
+      "blocks": {
+        "card_7YMVKT": {
+          "type": "card",
+          "settings": {
+            "heading": "Our Holiday Gift Picks",
+            "image": "shopify://shop_images/card-img-1.webp",
+            "subtext": "The best presents for everyone on your list.",
+            "cta_text": "Read More",
+            "cta_url": "/"
+          }
+        },
+        "card_fnjefz": {
+          "type": "card",
+          "settings": {
+            "heading": "Cleaner Fashion",
+            "image": "shopify://shop_images/card-img-2.webp",
+            "subtext": "See the sustainability efforts behind each of our products.",
+            "cta_text": "Learn More",
+            "cta_url": "/"
+          }
+        }
+      },
+      "block_order": [
+        "card_7YMVKT",
+        "card_fnjefz"
+      ],
+      "name": "Editorial Cards",
+      "settings": {}
+    },
+    "photo_slider_rfJetm": {
+      "type": "photo-slider",
+      "blocks": {
+        "photo_hpcqtR": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/block-1.png",
+            "alt_text": "Customer photo",
+            "product_url": "/"
+          }
+        },
+        "photo_LjJ7mq": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/block-2.png",
+            "alt_text": "Customer photo",
+            "product_url": "/"
+          }
+        },
+        "photo_NMxYfL": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/block-3.png",
+            "alt_text": "Customer photo",
+            "product_url": "/"
+          }
+        },
+        "photo_XQ3Et7": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/block-4.png",
+            "alt_text": "Customer photo",
+            "product_url": "/"
+          }
+        },
+        "photo_U8c7W8": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/block-5.png",
+            "alt_text": "Customer photo",
+            "product_url": "/"
+          }
+        }
+      },
+      "block_order": [
+        "photo_hpcqtR",
+        "photo_LjJ7mq",
+        "photo_NMxYfL",
+        "photo_XQ3Et7",
+        "photo_U8c7W8"
+      ],
+      "name": "UGC Photo Slider",
+      "settings": {
+        "heading": "Everlane On You",
+        "subtext": "Share your latest look with #EverlaneOnYou for a chance to be featured.",
+        "cta_text": "Add Your Photo",
+        "cta_url": "/"
+      }
+    },
+    "feature_perks_PVL6tg": {
+      "type": "feature-perks",
+      "blocks": {
+        "perk_xWPmqL": {
+          "type": "perk",
+          "settings": {
+            "icon": "shopify://shop_images/box.png",
+            "title": "Complimentary Shipping",
+            "description": "Enjoy free shipping on U.S. orders over $100."
+          }
+        },
+        "perk_aeKCbk": {
+          "type": "perk",
+          "settings": {
+            "icon": "shopify://shop_images/recycle.png",
+            "title": "Consciously Crafted",
+            "description": "Designed with you and the planet in mind."
+          }
+        },
+        "perk_TiFHJM": {
+          "type": "perk",
+          "settings": {
+            "icon": "shopify://shop_images/pin.png",
+            "title": "Come Say Hi",
+            "description": "We have 11 stores across the U.S."
+          }
+        }
+      },
+      "block_order": [
+        "perk_xWPmqL",
+        "perk_aeKCbk",
+        "perk_TiFHJM"
+      ],
+      "name": "Feature Perks",
+      "settings": {}
+    }
+  },
+  "order": [
+    "custom_hero_xGRVJV",
+    "shop_by_category_fhcVCW",
+    "promo_banner_zizpLm",
+    "mission_banner_4jQPnU",
+    "product_carousel_wCpcRp",
+    "testimonials_BD39tJ",
+    "editorial_cards_Tc7kEk",
+    "photo_slider_rfJetm",
+    "feature_perks_PVL6tg"
+  ]
+}

@@ -1,0 +1,83 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "custom_announcement_bar_yadqAi": {
+      "type": "custom-announcement-bar",
+      "name": "Announcement Bar",
+      "settings": {
+        "message": "Get early access on launches and offers.",
+        "cta_text": "Sign Up For Texts",
+        "cta_url": "/",
+        "show_arrow": true,
+        "show_locale": true,
+        "locale_flag": "🇺🇸",
+        "locale_label": "USD",
+        "bg_color": "#000000",
+        "text_color": "#ffffff"
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "mega_menu_images_HAmfeK": {
+          "type": "mega_menu_images",
+          "settings": {
+            "menu_item_title": "Women",
+            "promo_image_1": "shopify://shop_images/young-female-models-denim_925x_c64d0a77-9637-4845-a73c-fca8e20f8a18.jpg",
+            "promo_heading_1": "The Holiday Outfit",
+            "promo_link_1": "shopify://collections/everlane-women",
+            "promo_image_2": "shopify://shop_images/urban-fashion_925x_9e1183f0-bc97-4692-9f3c-2fcae8ca2752.jpg",
+            "promo_heading_2": "Giftable Sweaters",
+            "promo_link_2": "shopify://collections/everlane-women"
+          }
+        },
+        "mega_menu_images_X6M9yF": {
+          "type": "mega_menu_images",
+          "settings": {
+            "menu_item_title": "Men",
+            "promo_image_1": "shopify://shop_images/red-plaid-shirt_925x_ec457107-c5a7-4fb7-8cd0-29273d29eb2f.jpg",
+            "promo_heading_1": "The Holiday Outfit",
+            "promo_link_1": "shopify://collections/everlane-men",
+            "promo_image_2": "shopify://shop_images/mens-fall-fashion-jacket_925x_6c200493-dede-4a40-9e45-762f9a0a38cd.jpg",
+            "promo_heading_2": "Giftable Sweaters",
+            "promo_link_2": "shopify://collections/everlane-men"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_images_HAmfeK",
+        "mega_menu_images_X6M9yF"
+      ],
+      "settings": {
+        "logo_position": "middle-center",
+        "mobile_logo_position": "center",
+        "menu": "main-menu",
+        "menu_type_desktop": "mega",
+        "sticky_header_type": "on-scroll-up",
+        "show_line_separator": true,
+        "color_scheme": "scheme-1",
+        "menu_color_scheme": "scheme-1",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "enable_customer_avatar": true,
+        "margin_bottom": 0,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "custom_announcement_bar_yadqAi",
+    "header"
+  ]
+}

@@ -1,0 +1,134 @@
+{% comment %}
+  Renders a megamenu for the header.
+
+  Usage:
+  {% render 'header-mega-menu' %}
+{% endcomment %}
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in section.settings.menu.links -%}
+      <li>
+        {%- if link.links != blank -%}
+          <header-menu>
+            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
+              <summary
+                id="HeaderMenu-{{ link.handle }}"
+                class="header__menu-item list-menu__item link focus-inset"
+              >
+                <span>
+                  {{- link.title | escape -}}
+                </span>
+              </summary>
+              <div
+                id="MegaMenu-Content-{{ forloop.index }}"
+                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                tabindex="-1"
+              >
+                {%- liquid
+                  assign has_promos = false
+                  assign promo_block = null
+
+                  for block in section.blocks
+                    if block.type == 'mega_menu_images' and block.settings.menu_item_title == link.title
+                      assign has_promos = true
+                      assign promo_block = block
+                      break
+                    endif
+                  endfor
+                -%}
+
+                <div class="page-width">
+                  <ul class="mega-menu__list{% if has_promos %} mega-menu__list--has-promos{% endif %}">
+                    {%- for childlink in link.links -%}
+                      <li>
+                        <a
+                          href="{{ childlink.url }}"
+                          class="mega-menu__link mega-menu__link--level-2"
+                          style="color: #737373; font-size: 1.30rem; text-transform: uppercase;"
+                        >
+                          {{- childlink.title | escape -}}
+                        </a>
+                        {%- if childlink.links != blank -%}
+                          <ul class="list-unstyled" role="list">
+                            {%- for grandchildlink in childlink.links -%}
+                              <li>
+                                <a
+                                  href="{{ grandchildlink.url }}"
+                                  class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
+                                >
+                                  {{- grandchildlink.title | escape -}}
+                                </a>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+
+                  {%- if has_promos -%}
+                    <div class="mega-menu__promos">
+                      {%- if promo_block.settings.promo_image_1 != blank -%}
+                        <a href="{{ promo_block.settings.promo_link_1 }}" class="mega-menu__promo-card">
+                          {{ promo_block.settings.promo_image_1 | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                          <div class="mega-menu__promo-text">
+                            <span>{{ promo_block.settings.promo_heading_1 }}</span>
+                            <span class="arrow">&rarr;</span>
+                          </div>
+                        </a>
+                      {%- endif -%}
+
+                      {%- if promo_block.settings.promo_image_2 != blank -%}
+                        <a href="{{ promo_block.settings.promo_link_2 }}" class="mega-menu__promo-card">
+                          {{ promo_block.settings.promo_image_2 | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                          <div class="mega-menu__promo-text">
+                            <span>{{ promo_block.settings.promo_heading_2 }}</span>
+                            <span class="arrow">&rarr;</span>
+                          </div>
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            </details>
+          </header-menu>
+        {%- else -%}
+          <a
+            id="HeaderMenu-{{ link.handle }}"
+            href="{{ link.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            <span>
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+
+{% stylesheet %}
+  .header__menu-item > span {
+    font-family: 'maison-book', sans-serif;
+    font-weight: normal;
+    color: #0d0d0d;
+  }
+
+  .mega-menu__promo-text {
+    font-family: 'maison-demi', sans-serif;
+    font-weight: normal !important;
+    font-size: 24px;
+    display: flex;
+    gap: 12px;
+  }
+
+  .mega-menu__promo-text > span {
+    line-height: normal !important;
+  }
+{% endstylesheet %}

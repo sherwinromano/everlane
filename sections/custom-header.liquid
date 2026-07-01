@@ -1,0 +1,976 @@
+{%- liquid
+  assign main_menu = linklists[section.settings.main_menu]
+  assign sub_menu = linklists[section.settings.sub_menu]
+-%}
+
+<header
+  id="custom-header"
+  class="ch-header"
+  x-data="{ mobileOpen: false, activeMenu: null }"
+  @keydown.escape.window="mobileOpen = false; activeMenu = null"
+>
+  <div class="ch-topbar">
+    <nav class="ch-desktop-nav">
+      {% for link in main_menu.links %}
+        {%- liquid
+          assign mega_block = null
+          for block in section.blocks
+            if block.type == 'mega_menu' and block.settings.trigger_title == link.title
+              assign mega_block = block
+              break
+            endif
+          endfor
+          assign show_mega = false
+          if link.links.size > 0 or mega_block != null
+            assign show_mega = true
+          endif
+        -%}
+        <div
+          class="ch-nav-item"
+          {% if show_mega %}
+            @mouseenter="activeMenu = '{{ link.title | handleize }}'"
+            @mouseleave="activeMenu = null"
+          {% endif %}
+        >
+          <a
+            href="{{ link.url }}"
+            class="ch-nav-link {% if link.active %}ch-nav-link--active{% endif %}"
+          >
+            {{- link.title -}}
+          </a>
+        </div>
+      {% endfor %}
+    </nav>
+
+    <a href="{{ routes.root_url }}" class="ch-logo" aria-label="{{ shop.name }}">
+      {% if section.settings.logo != blank %}
+        {{
+          section.settings.logo
+          | image_url: width: section.settings.logo.width
+          | image_tag: class: 'ch-logo-img', alt: shop.name, loading: 'eager'
+        }}
+      {% else %}
+        <span class="ch-logo-text">{{ section.settings.logo_text | default: shop.name | upcase }}</span>
+      {% endif %}
+    </a>
+
+    <div class="ch-desktop-icons">
+      <button
+        class="ch-icon-btn"
+        aria-label="Search"
+        onclick="document.dispatchEvent(new CustomEvent('open-search'))"
+      >
+        <img src="{{ 'search-icon.svg' | asset_url }}" width="40" height="40" alt="Search">
+      </button>
+      <a href="{{ routes.account_url }}" class="ch-icon-btn" aria-label="Account">
+        <img src="{{ 'user-icon.svg' | asset_url }}" width="40" height="40" alt="Account">
+      </a>
+      <a href="{{ routes.cart_url }}" class="ch-icon-btn ch-cart-wrap" aria-label="Cart">
+        <img src="{{ 'cart-icon.svg' | asset_url }}" width="40" height="40" alt="Cart">
+        {% if cart.item_count > 0 %}
+          <span class="ch-cart-badge">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+    </div>
+
+    <div class="ch-mobile-controls">
+      <a href="{{ routes.cart_url }}" class="ch-icon-btn ch-cart-wrap" aria-label="Cart">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.7"
+        >
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        {% if cart.item_count > 0 %}
+          <span class="ch-cart-badge">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+      <button class="ch-icon-btn" @click="mobileOpen = true" aria-label="Open menu">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.7"
+        >
+          <line x1="3" y1="6"  x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  {% if sub_menu.links.size > 0 %}
+    <div class="ch-subnav">
+      <div class="ch-subnav-inner">
+        <ul class="ch-subnav-list">
+          {% for link in sub_menu.links %}
+            <li>
+              <a
+                href="{{ link.url }}"
+                class="ch-subnav-link {% if link.title == section.settings.sale_label %}ch-subnav-link--sale{% endif %}"
+              >
+                {{- link.title -}}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+
+  {% for link in main_menu.links %}
+    {%- liquid
+      assign mega_block = null
+      for block in section.blocks
+        if block.type == 'mega_menu' and block.settings.trigger_title == link.title
+          assign mega_block = block
+          break
+        endif
+      endfor
+      assign show_mega = false
+      if link.links.size > 0 or mega_block != null
+        assign show_mega = true
+      endif
+    -%}
+
+    {% if show_mega %}
+      {%- assign panel_id = link.title | handleize -%}
+      {%- liquid
+        assign has_featured = false
+        if mega_block != null and linklists[mega_block.settings.featured_menu].links.size > 0
+          assign has_featured = true
+        endif
+        assign has_cards = false
+        if mega_block != null and mega_block.settings.card_1_image != blank
+          assign has_cards = true
+        endif
+        assign col_count = 0
+        if link.links.size > 0
+          assign col_count = col_count | plus: 1
+        endif
+        if has_featured
+          assign col_count = col_count | plus: 1
+        endif
+        if has_cards
+          assign col_count = col_count | plus: 2
+        endif
+      -%}
+
+      <div
+        class="ch-mega-panel"
+        x-show="activeMenu === '{{ panel_id }}'"
+        @mouseenter="activeMenu = '{{ panel_id }}'"
+        @mouseleave="activeMenu = null"
+        x-transition:enter="transition ease-out duration-150"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-100"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        x-cloak
+        {% if mega_block != null %}
+          {{- mega_block.shopify_attributes -}}
+        {% endif %}
+        style="--col-count: {{ col_count }};"
+      >
+        <div class="ch-mega-inner">
+          {% if link.links.size > 0 %}
+            <div class="ch-mega-col">
+              <p class="ch-mega-heading">
+                {% if mega_block != null and mega_block.settings.highlights_heading != blank %}
+                  {{ mega_block.settings.highlights_heading }}
+                {% else %}
+                  Highlights
+                {% endif %}
+              </p>
+              <ul class="ch-mega-list">
+                {% for child in link.links %}
+                  <li>
+                    <a href="{{ child.url }}" class="ch-mega-link">{{ child.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if has_featured %}
+            <div class="ch-mega-col">
+              <p class="ch-mega-heading">
+                {{ mega_block.settings.featured_heading | default: 'Featured Shops' }}
+              </p>
+              <ul class="ch-mega-list">
+                {% for mlink in linklists[mega_block.settings.featured_menu].links %}
+                  <li>
+                    <a href="{{ mlink.url }}" class="ch-mega-link">{{ mlink.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if has_cards %}
+            <a href="{{ mega_block.settings.card_1_url }}" class="ch-mega-card">
+              {{
+                mega_block.settings.card_1_image
+                | image_url: width: 600
+                | image_tag: class: 'ch-mega-card-img', loading: 'lazy', alt: mega_block.settings.card_1_title
+              }}
+              <div class="ch-mega-card-scrim"></div>
+              <div class="ch-mega-card-footer">
+                <p class="ch-mega-card-title">{{ mega_block.settings.card_1_title }}</p>
+                <span class="ch-mega-card-arrow">→</span>
+              </div>
+            </a>
+
+            {% if mega_block.settings.card_2_image != blank %}
+              <a href="{{ mega_block.settings.card_2_url }}" class="ch-mega-card">
+                {{
+                  mega_block.settings.card_2_image
+                  | image_url: width: 600
+                  | image_tag: class: 'ch-mega-card-img', loading: 'lazy', alt: mega_block.settings.card_2_title
+                }}
+                <div class="ch-mega-card-scrim"></div>
+                <div class="ch-mega-card-footer">
+                  <p class="ch-mega-card-title">{{ mega_block.settings.card_2_title }}</p>
+                  <span class="ch-mega-card-arrow">→</span>
+                </div>
+              </a>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <div
+    class="ch-drawer-overlay"
+    x-show="mobileOpen"
+    @click="mobileOpen = false"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    x-cloak
+  ></div>
+
+  <div
+    class="ch-drawer"
+    x-show="mobileOpen"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 translate-x-[-100%]"
+    x-transition:enter-end="opacity-100 translate-x-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 translate-x-0"
+    x-transition:leave-end="opacity-0 translate-x-[-100%]"
+    x-cloak
+  >
+    <div class="ch-drawer-head">
+      <span class="ch-drawer-logo">{{ section.settings.logo_text | default: shop.name | upcase }}</span>
+      <button class="ch-icon-btn" @click="mobileOpen = false" aria-label="Close menu">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.7"
+        >
+          <line x1="18" y1="6"  x2="6"  y2="18"/>
+          <line x1="6"  y1="6"  x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="ch-drawer-body">
+      <nav>
+        {% for link in main_menu.links %}
+          {%- liquid
+            assign mega_block = null
+            for block in section.blocks
+              if block.type == 'mega_menu' and block.settings.trigger_title == link.title
+                assign mega_block = block
+                break
+              endif
+            endfor
+            assign has_children = false
+            if link.links.size > 0
+              assign has_children = true
+            endif
+          -%}
+          <div x-data="{ open: false }" class="ch-drawer-row">
+            <div class="ch-drawer-row-head">
+              <a href="{{ link.url }}" class="ch-drawer-link">{{ link.title }}</a>
+              {% if has_children %}
+                <button class="ch-drawer-toggle" @click="open = !open" aria-label="Expand">
+                  <svg
+                    x-show="!open"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                  <svg
+                    x-show="open"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polyline points="18 15 12 9 6 15"/>
+                  </svg>
+                </button>
+              {% endif %}
+            </div>
+
+            {% if has_children %}
+              <div x-show="open" class="ch-drawer-sub">
+                {% if link.links.size > 0 %}
+                  <div class="ch-drawer-sub-group">
+                    <p class="ch-mega-heading">
+                      {% if mega_block != null and mega_block.settings.highlights_heading != blank %}
+                        {{ mega_block.settings.highlights_heading }}
+                      {% else %}
+                        Highlights
+                      {% endif %}
+                    </p>
+                    {% for child in link.links %}
+                      <a href="{{ child.url }}" class="ch-drawer-sublink">{{ child.title }}</a>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+
+                {% if mega_block != null and linklists[mega_block.settings.featured_menu].links.size > 0 %}
+                  <div class="ch-drawer-sub-group">
+                    <p class="ch-mega-heading">
+                      {{ mega_block.settings.featured_heading | default: 'Featured Shops' }}
+                    </p>
+                    {% for mlink in linklists[mega_block.settings.featured_menu].links %}
+                      <a href="{{ mlink.url }}" class="ch-drawer-sublink">{{ mlink.title }}</a>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        {% if sub_menu.links.size > 0 %}
+          <div class="ch-drawer-shop-group">
+            <p class="ch-mega-heading">Shop</p>
+            {% for link in sub_menu.links %}
+              <a
+                href="{{ link.url }}"
+                class="ch-drawer-sublink {% if link.title == section.settings.sale_label %}ch-drawer-sublink--sale{% endif %}"
+              >
+                {{- link.title -}}
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </nav>
+
+      <div class="ch-drawer-footer">
+        <a href="{{ routes.account_url }}" class="ch-drawer-footer-link">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="17"
+            height="17"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.7"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          Account
+        </a>
+        <button
+          class="ch-drawer-footer-link"
+          onclick="document.dispatchEvent(new CustomEvent('open-search'))"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="17"
+            height="17"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.7"
+          >
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  [x-cloak] {
+    display: none !important;
+  }
+
+  .ch-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 50;
+  }
+
+  .ch-topbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .ch-logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    z-index: 1;
+  }
+  .ch-logo-img {
+    height: 20px;
+    width: auto;
+    display: block;
+  }
+  .ch-logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: #000;
+    white-space: nowrap;
+  }
+
+  .ch-desktop-nav {
+    display: none;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .ch-nav-item {
+    position: relative;
+  }
+  .ch-nav-link {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: #374151;
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1.5px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .ch-nav-link:hover,
+  .ch-nav-link--active {
+    color: #000;
+    border-bottom-color: #000;
+  }
+
+  .ch-desktop-icons {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+  }
+
+  .ch-mobile-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .ch-icon-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #374151;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s;
+    text-decoration: none;
+  }
+  .ch-icon-btn:hover {
+    color: #000;
+  }
+
+  .ch-cart-wrap {
+    position: relative;
+  }
+  .ch-cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #000;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 600;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .ch-subnav {
+    display: none;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .ch-subnav-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .ch-subnav-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 28px;
+    height: 38px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .ch-subnav-link {
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: #4b5563;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s;
+  }
+  .ch-subnav-link:hover {
+    color: #000;
+  }
+  .ch-subnav-link--sale {
+    color: #c0392b;
+    font-weight: 500;
+  }
+  .ch-subnav-link--sale:hover {
+    color: #96281b;
+  }
+
+  /* Mega panel */
+  .ch-mega-panel {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    z-index: 40;
+  }
+  .ch-mega-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 32px 40px;
+    display: grid;
+    grid-template-columns: repeat(var(--col-count, 2), 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+  .ch-mega-heading {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin: 0 0 16px 0;
+  }
+  .ch-mega-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ch-mega-link {
+    font-size: 13px;
+    color: #4b5563;
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.15s;
+  }
+  .ch-mega-link:hover {
+    color: #000;
+  }
+
+  .ch-mega-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    text-decoration: none;
+  }
+  .ch-mega-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .ch-mega-card:hover .ch-mega-card-img {
+    transform: scale(1.04);
+  }
+  .ch-mega-card-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 60%);
+  }
+  .ch-mega-card-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .ch-mega-card-title {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin: 0;
+    padding-right: 12px;
+  }
+  .ch-mega-card-arrow {
+    color: #fff;
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .ch-mega-card:hover .ch-mega-card-arrow {
+    transform: translateX(3px);
+  }
+
+  /* Drawer */
+  .ch-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 55;
+  }
+  .ch-drawer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 82vw;
+    max-width: 340px;
+    background: #fff;
+    z-index: 60;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+    overflow-y: auto;
+  }
+  .ch-drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 56px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .ch-drawer-logo {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+  }
+  .ch-drawer-body {
+    padding: 16px 20px 40px;
+  }
+  .ch-drawer-row {
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .ch-drawer-row-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ch-drawer-link {
+    flex: 1;
+    display: block;
+    padding: 16px 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111;
+    text-decoration: none;
+  }
+  .ch-drawer-toggle {
+    padding: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+  }
+  .ch-drawer-sub {
+    padding-bottom: 16px;
+  }
+  .ch-drawer-sub-group {
+    margin-bottom: 20px;
+  }
+  .ch-drawer-sublink {
+    display: block;
+    padding: 7px 0;
+    font-size: 13px;
+    color: #4b5563;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .ch-drawer-sublink:hover {
+    color: #000;
+  }
+  .ch-drawer-sublink--sale {
+    color: #c0392b;
+    font-weight: 500;
+  }
+  .ch-drawer-shop-group {
+    padding-top: 20px;
+  }
+  .ch-drawer-footer {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #f3f4f6;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .ch-drawer-footer-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #374151;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s;
+  }
+  .ch-drawer-footer-link:hover {
+    color: #000;
+  }
+
+  @media (min-width: 1024px) {
+    .ch-topbar {
+      padding: 0 40px;
+    }
+    .ch-subnav-inner {
+      padding: 0 40px;
+    }
+
+    .ch-desktop-nav {
+      display: flex;
+    }
+    .ch-desktop-icons {
+      display: flex;
+    }
+    .ch-mobile-controls {
+      display: none;
+    }
+    .ch-subnav {
+      display: block;
+    }
+    .ch-mega-panel {
+      display: block;
+    }
+
+    .ch-drawer-overlay,
+    .ch-drawer {
+      display: none !important;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .ch-topbar {
+      padding: 0 64px;
+    }
+    .ch-subnav-inner {
+      padding: 0 64px;
+    }
+    .ch-mega-inner {
+      padding: 32px 64px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "section",
+  "class": "custom-header-section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Text (fallback if no image)",
+      "default": "EVERLANE"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Main Navigation Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "sub_menu",
+      "label": "Secondary Navigation Menu"
+    },
+    {
+      "type": "text",
+      "id": "sale_label",
+      "label": "Sale Link Label (highlights in red)",
+      "default": "Sale"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega Menu Extras",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "text",
+          "id": "trigger_title",
+          "label": "Nav Item Title (case-sensitive)",
+          "info": "Must exactly match a top-level link title in your main menu, e.g. Women, Men"
+        },
+        {
+          "type": "header",
+          "content": "Highlights Column Label (optional)"
+        },
+        {
+          "type": "text",
+          "id": "highlights_heading",
+          "label": "Highlights Column Heading",
+          "default": "Highlights",
+          "info": "Overrides the default 'Highlights' label above the child links"
+        },
+        {
+          "type": "header",
+          "content": "Featured Column (optional)"
+        },
+        {
+          "type": "text",
+          "id": "featured_heading",
+          "label": "Featured Column Heading",
+          "default": "Featured Shops"
+        },
+        {
+          "type": "link_list",
+          "id": "featured_menu",
+          "label": "Featured Links Menu"
+        },
+        {
+          "type": "header",
+          "content": "Image Card 1 (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_1_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card_1_title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "card_1_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "header",
+          "content": "Image Card 2 (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_2_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card_2_title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "card_2_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header",
+      "category": "Everlane"
+    }
+  ]
+}
+{% endschema %}

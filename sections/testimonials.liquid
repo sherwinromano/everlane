@@ -1,0 +1,472 @@
+<div class="ts-section" id="ts-{{ section.id }}">
+  <button class="ts-arrow ts-arrow--prev" aria-label="Previous review">
+    <img src="{{ 'caret-left.svg' | asset_url }}" alt="Caret left icon" height="40" width="40">
+  </button>
+
+  <div class="ts-track-wrap">
+    <div class="ts-track">
+      {% for block in section.blocks %}
+        {% if block.type == 'testimonial' %}
+          <div class="ts-slide" {{ block.shopify_attributes }}>
+            <div class="ts-left">
+              <div class="ts-inner">
+                {% if section.settings.label != blank %}
+                  <p class="ts-label">{{ section.settings.label }}</p>
+                {% endif %}
+
+                <div class="ts-stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+                  {%- assign rating = block.settings.rating | default: 5 -%}
+                  {%- for i in (1..5) -%}
+                    {%- if i <= rating -%}
+                      <span class="ts-star ts-star--filled">★</span>
+                    {%- else -%}
+                      <span class="ts-star ts-star--empty">★</span>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+
+                {% if block.settings.quote != blank %}
+                  <blockquote class="ts-quote">"{{ block.settings.quote }}"</blockquote>
+                {% endif %}
+
+                <div class="ts-attribution">
+                  <span class="ts-reviewer">-- {{ block.settings.reviewer_name }}</span>
+                  {%- if block.settings.product_url != blank and block.settings.product_name != blank -%}
+                    ,&nbsp;<a href="{{ block.settings.product_url }}" class="ts-product-link">
+                      {{- block.settings.product_name -}}
+                    </a>
+                  {%- elsif block.settings.product_name != blank -%}
+                    , <span class="ts-product-name">{{ block.settings.product_name }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+
+            <div class="ts-right">
+              {% if block.settings.image != blank %}
+                {{
+                  block.settings.image
+                  | image_url: width: 1200
+                  | image_tag: class: 'ts-img', loading: 'lazy', alt: block.settings.product_name
+                  | default: block.settings.reviewer_name, widths: '600, 800, 1000, 1200'
+                }}
+              {% else %}
+                <div class="ts-img-placeholder">
+                  {{ 'product-1' | placeholder_svg_tag: 'ts-placeholder-svg' }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="ts-mobile-nav">
+    <button class="ts-mob-prev" aria-label="Previous review">
+      <img src="{{ 'caret-left.svg' | asset_url }}" alt="Caret left icon" height="40" width="40">
+    </button>
+    <button class="ts-mob-next" aria-label="Next review">
+      <img src="{{ 'caret-right.svg' | asset_url }}" alt="Caret right icon" height="40" width="40">
+    </button>
+  </div>
+
+  <button class="ts-arrow ts-arrow--next" aria-label="Next review">
+    <img src="{{ 'caret-right.svg' | asset_url }}" alt="Caret right icon" height="40" width="40">
+  </button>
+</div>
+
+<style>
+  /* ─── Reset blockquote browser defaults ─── */
+  #ts-{{ section.id }} blockquote {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-style: normal;
+  }
+
+  .ts-section {
+    position: relative;
+    width: 100%;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .ts-track-wrap {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .ts-track {
+    display: flex;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .ts-slide {
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  /* ─── Left panel ─── */
+  .ts-left {
+    display: flex;
+    align-items: center;   /* vertically center content */
+    justify-content: flex-start;
+    padding: 48px 24px;
+  }
+
+  .ts-inner {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .ts-label {
+    font-size: 13px;
+    color: #374151;
+    letter-spacing: 0.02em;
+    margin: 0;
+    font-style: normal;
+  }
+
+  .ts-stars {
+    display: flex;
+    gap: 2px;
+    line-height: 1;
+  }
+
+  .ts-star {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .ts-star--filled { color: #111; }
+  .ts-star--empty  { color: #d1d5db; }
+
+  /* ─── Quote: upright (not italic), clean serif or inherits theme font ─── */
+  .ts-quote {
+    font-size: clamp(22px, 3vw, 40px);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: #111;
+    margin: 0;
+    font-style: normal;   /* KEY FIX: override browser blockquote italic */
+    font-weight: 400;
+  }
+
+  .ts-attribution {
+    font-size: 14px;
+    color: #374151;
+    line-height: 1.5;
+    font-style: normal;
+  }
+
+  .ts-product-link {
+    color: #111;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ─── Right panel ─── */
+  .ts-right {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+  }
+
+  .ts-img,
+  .ts-img-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ts-placeholder-svg {
+    width: 40%;
+    height: 40%;
+    opacity: 0.2;
+  }
+
+  /* ─── Desktop arrows: bare chevrons, NO circle/pill, NO background ─── */
+  .ts-arrow {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;   /* KEY FIX: no white pill */
+    box-shadow: none;           /* KEY FIX: no shadow */
+    cursor: pointer;
+    color: #111;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    padding: 0;
+    transition: opacity 0.2s;
+  }
+
+  .ts-arrow:hover { opacity: 0.5; }
+
+  .ts-arrow--prev { left: 16px; }
+  .ts-arrow--next { right: 16px; }
+
+  .ts-arrow[disabled] {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  /* ─── Mobile nav ─── */
+  .ts-mobile-nav {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px 0 32px;
+  }
+
+  .ts-mob-prev,
+  .ts-mob-next {
+    width: 42px;
+    height: 42px;
+
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ts-mob-prev[disabled],
+  .ts-mob-next[disabled] {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  /* ── TABLET + DESKTOP ── */
+  @media (min-width: 768px) {
+    .ts-section {
+      height: 100vh;
+    }
+
+    .ts-track-wrap,
+    .ts-track {
+      height: 100%;
+    }
+
+    .ts-slide {
+      flex-direction: row;
+      height: 100%;
+    }
+
+    /* KEY FIX: 47/53 split matching Image 1 — left slightly narrower than right */
+    .ts-left {
+      flex: 0 0 47%;
+      display: flex;
+      align-items: center;        /* vertically centered */
+      justify-content: center;
+      /* Generous left padding so content has breathing room from viewport edge */
+      padding: clamp(40px, 6vw, 100px) clamp(48px, 6vw, 96px);
+      overflow-y: auto;
+    }
+
+    .ts-inner {
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .ts-right {
+      flex: 0 0 53%;
+      height: 100%;
+      aspect-ratio: unset;
+      overflow: hidden;
+    }
+
+    .ts-img,
+    .ts-img-placeholder {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .ts-quote {
+      font-size: clamp(24px, 2.4vw, 42px);
+      line-height: 1.25;
+      font-style: normal;
+    }
+
+    .ts-mobile-nav { display: none; }
+
+    .ts-arrow {
+      display: flex;
+    }
+
+    /* Arrows hug the outer viewport edges */
+    .ts-arrow--prev { left: 20px; }
+    .ts-arrow--next { right: 20px; }
+  }
+
+  /* ── LARGE DESKTOP ── */
+  @media (min-width: 1200px) {
+    .ts-left {
+      padding: clamp(60px, 6vw, 100px) 80px;
+    }
+
+    .ts-inner {
+      max-width: 560px;
+    }
+
+    .ts-quote {
+      font-size: clamp(28px, 2.2vw, 44px);
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const section = document.getElementById('ts-{{ section.id }}');
+    if (!section) return;
+
+    const track = section.querySelector('.ts-track');
+    const slides = Array.from(section.querySelectorAll('.ts-slide'));
+    const prevBtn = section.querySelector('.ts-arrow--prev');
+    const nextBtn = section.querySelector('.ts-arrow--next');
+    const mobPrev = section.querySelector('.ts-mob-prev');
+    const mobNext = section.querySelector('.ts-mob-next');
+    const total = slides.length;
+
+    if (total <= 1) {
+      [prevBtn, nextBtn, mobPrev, mobNext].forEach((b) => {
+        if (b) b.disabled = true;
+      });
+      return;
+    }
+
+    let current = 0;
+
+    function goTo(index) {
+      current = Math.max(0, Math.min(index, total - 1));
+      track.style.transform = 'translateX(-' + current * 100 + '%)';
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === total - 1;
+      if (mobPrev) mobPrev.disabled = current === 0;
+      if (mobNext) mobNext.disabled = current === total - 1;
+    }
+
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+    if (mobPrev) mobPrev.addEventListener('click', () => goTo(current - 1));
+    if (mobNext) mobNext.addEventListener('click', () => goTo(current + 1));
+
+    let startX = 0;
+    track.addEventListener(
+      'touchstart',
+      (e) => {
+        startX = e.touches[0].clientX;
+      },
+      { passive: true }
+    );
+    track.addEventListener('touchend', (e) => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+    });
+
+    goTo(0);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "testimonials-section",
+  "limit": 1,
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Section Label",
+      "default": "People Are Talking"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Review Quote",
+          "default": "Love this shirt! Fits perfectly and the fabric is thick without being stiff."
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer Name",
+          "default": "JonSnSF"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product Name",
+          "default": "The Heavyweight Overshirt"
+        },
+        {
+          "type": "url",
+          "id": "product_url",
+          "label": "Product URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product / Model Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "category": "Everlane",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Love this shirt! Fits perfectly and the fabric is thick without being stiff.",
+            "reviewer_name": "JonSnSF",
+            "product_name": "The Heavyweight Overshirt"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Incredibly soft and the fit is just right. Will definitely be buying more colors.",
+            "reviewer_name": "Sarah M.",
+            "product_name": "The Essential Organic Crew"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

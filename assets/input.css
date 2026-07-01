@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "maison-book";
+  src: url("https://cdn.shopify.com/s/files/1/0698/3735/7174/files/Maison-Neue-Book.woff2?v=1778116924")
+    format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "maison-demi";
+  src: url("https://cdn.shopify.com/s/files/1/0698/3735/7174/files/Maison-Neue-Demi.woff2?v=1778116924")
+    format("woff2");
+  font-display: swap;
+}
+
+.maison-book {
+  font-family: "maison-book", sans-serif;
+}
+
+.maison-demi {
+  font-family: "maison-demi", sans-serif;
+}
+
+@theme {
+  --text-color-primary: #262626;
+  --text-color-secondary: #737373;
+}

@@ -1,0 +1,221 @@
+<div
+  class="ab-bar"
+  id="ab-{{ section.id }}"
+  style="--ab-bg: {{ section.settings.bg_color }}; --ab-text-color: {{ section.settings.text_color }};"
+>
+  {%- comment -%} ── Center message ── {%- endcomment -%}
+  <div class="ab-center">
+    {% if section.settings.message != blank %}
+      <span class="ab-message maison-demi">{{ section.settings.message }}</span>
+    {% endif %}
+
+    {% if section.settings.cta_text != blank and section.settings.cta_url != blank %}
+      <a href="{{ section.settings.cta_url }}" class="ab-cta maison-book">
+        {{ section.settings.cta_text }}
+        {% if section.settings.show_arrow -%}
+          <span class="ab-arrow" aria-hidden="true">&nbsp;&rarr;</span>
+        {%- endif %}
+      </a>
+    {% endif %}
+  </div>
+
+  {%- comment -%} ── Right: currency / locale ── {%- endcomment -%}
+  {% if section.settings.show_locale %}
+    <div class="ab-locale">
+      {% if section.settings.locale_flag != blank %}
+        <span class="ab-flag" aria-hidden="true">{{ section.settings.locale_flag }}</span>
+      {% endif %}
+      {% if section.settings.locale_label != blank %}
+        <span class="ab-currency">{{ section.settings.locale_label }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+
+<style>
+  /* ── Bar ── */
+  .ab-bar {
+    width: 100%;
+    background: var(--ab-bg, #000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px 16px;
+    min-height: 40px;
+    box-sizing: border-box;
+  }
+
+  /* ── Center block ── */
+  .ab-center {
+    display: flex;
+    gap: 4px;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* ── Message text ── */
+  .ab-message {
+    font-size: 12px;
+    color: var(--ab-text-color, #fff);
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── CTA link ── */
+  .ab-cta {
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+    color: var(--ab-text-color, #fff);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+
+  .ab-cta:hover {
+    opacity: 0.7;
+  }
+
+  .ab-arrow {
+    font-style: normal;
+  }
+
+  /* ── Locale — absolutely right-aligned ── */
+  .ab-locale {
+    display: none; /* hidden on mobile to avoid overflow */
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ab-flag {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .ab-currency {
+    font-size: 12px;
+    color: var(--ab-text-color, #fff);
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+
+  /* ── Tablet: 768px ── */
+  @media (min-width: 768px) {
+    .ab-bar {
+      padding: 10px 24px;
+    }
+
+    .ab-message,
+    .ab-cta {
+      font-size: 13px;
+    }
+
+    .ab-locale {
+      display: flex;
+    }
+  }
+
+  /* ── Large desktop: 1024px ── */
+  @media (min-width: 1024px) {
+    .ab-bar {
+      padding: 10px 32px;
+    }
+
+    .ab-locale {
+      right: 32px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "tag": "div",
+  "class": "custom-announcement-bar",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Message"
+    },
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Message Text",
+      "default": "Get early access on launches and offers."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Link Text",
+      "default": "Sign Up For Texts"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Link URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrow",
+      "label": "Show Arrow (→) after CTA",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Locale / Currency"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_locale",
+      "label": "Show Locale Badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "locale_flag",
+      "label": "Flag Emoji",
+      "default": "🇺🇸",
+      "info": "Paste a flag emoji (e.g. 🇺🇸 🇬🇧 🇨🇦)"
+    },
+    {
+      "type": "text",
+      "id": "locale_label",
+      "label": "Currency / Locale Label",
+      "default": "USD"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text & Link Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar",
+      "category": "Everlane"
+    }
+  ]
+}
+{% endschema %}

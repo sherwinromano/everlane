@@ -1,0 +1,333 @@
+<div class="tl-section" id="tl-{{ section.id }}">
+  {% if section.settings.heading != blank %}
+    <h2 class="tl-heading maison-demi">{{ section.settings.heading }}</h2>
+  {% endif %}
+
+  <ul class="tl-grid" role="list">
+    {% for block in section.blocks %}
+      {% if block.type == 'article' %}
+        <li
+          class="tl-item{% if forloop.index > section.settings.initial_count %} tl-item--hidden{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.url != blank %}
+            <a href="{{ block.settings.url }}" class="tl-card">
+          {% else %}
+            <div class="tl-card">
+          {% endif %}
+
+          <div class="tl-img-wrap">
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 900
+                | image_tag:
+                  class: 'tl-img',
+                  loading: 'lazy',
+                  alt: block.settings.title,
+                  widths: '400, 600, 750, 900',
+                  sizes: '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw'
+              }}
+            {% else %}
+              <div class="tl-img-placeholder">
+                {{ 'lifestyle-2' | placeholder_svg_tag: 'tl-placeholder-svg' }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="tl-meta">
+            {% if block.settings.title != blank %}
+              <p class="tl-title maison-book">{{ block.settings.title }}</p>
+            {% endif %}
+            {% if block.settings.category != blank %}
+              <span class="tl-tag maison-demi">{{ block.settings.category }}</span>
+            {% endif %}
+          </div>
+
+          {% if block.settings.url != blank %}
+            </a>
+          {% else %}
+            </div>
+          {% endif %}
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  {%- assign total = section.blocks | where: 'type', 'article' | size -%}
+  {% if total > section.settings.initial_count %}
+    <div class="tl-footer">
+      <button class="tl-load-more" type="button" aria-label="Load more articles">
+        {{ section.settings.load_more_text }}
+      </button>
+    </div>
+  {% endif %}
+</div>
+
+<style>
+  /* ── Section ── */
+  .tl-section {
+    width: 100%;
+    background: #fff;
+    padding: 40px 20px 52px;
+  }
+
+  /* ── Heading ── */
+  .tl-heading {
+    font-size: clamp(26px, 5vw, 40px);
+    color: #000;
+    line-height: 1.1;
+    letter-spacing: 0;
+    margin-bottom: 12px;
+  }
+
+  /* ── Grid — mobile: 1 column ── */
+  .tl-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px 20px;
+  }
+
+  /* ── Hidden items (load more) ── */
+  .tl-item--hidden {
+    display: none;
+  }
+
+  /* ── Card ── */
+  .tl-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* ── Image wrapper — portrait 4:5 ── */
+  .tl-img-wrap {
+    width: 100%;
+    aspect-ratio: 4 / 4;
+    overflow: hidden;
+    background: #f3f4f6;
+  }
+
+  .tl-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.5s ease;
+  }
+
+  .tl-card:hover .tl-img {
+    transform: scale(1.03);
+  }
+
+  .tl-img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tl-placeholder-svg {
+    width: 30%;
+    height: 30%;
+    opacity: 0.15;
+  }
+
+  /* ── Meta: title + tag ── */
+  .tl-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .tl-title {
+    font-size: clamp(18px, 1.6vw, 32px);
+    color: #000;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  /* ── Category tag pill ── */
+  .tl-tag {
+    font-size: 12px;
+    color: #000;
+    border: 1px solid #dddbdc;
+    border-radius: 999px;
+    padding: 4px 20px;
+    letter-spacing: 0.2px;
+    width: fit-content;
+  }
+
+  /* ── Load more footer ── */
+  .tl-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+  }
+
+  .tl-load-more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 40px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: #fff;
+    background: #111;
+    border: 1px solid #111;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  .tl-load-more:hover {
+    background: #fff;
+    color: #111;
+  }
+
+  .tl-load-more--hidden {
+    display: none;
+  }
+
+  /* ── Tablet: 768px — 2 columns ── */
+  @media (min-width: 768px) {
+    .tl-section {
+      padding: 52px 32px 64px;
+    }
+
+    .tl-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px 24px;
+    }
+  }
+
+  /* ── Large desktop: 1024px — 3 columns ── */
+  @media (min-width: 1024px) {
+    .tl-section {
+      padding: 60px 48px 72px;
+    }
+
+    .tl-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 56px 28px;
+    }
+
+    .tl-title {
+      font-size: clamp(16px, 1.4vw, 20px);
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const section = document.getElementById('tl-{{ section.id }}');
+    if (!section) return;
+
+    const btn = section.querySelector('.tl-load-more');
+    if (!btn) return;
+
+    btn.addEventListener('click', function () {
+      const hidden = section.querySelectorAll('.tl-item--hidden');
+      hidden.forEach(function (item) {
+        item.classList.remove('tl-item--hidden');
+      });
+      // Hide the button once all items are revealed
+      btn.closest('.tl-footer').classList.add('tl-load-more--hidden');
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "The Latest",
+  "tag": "section",
+  "class": "the-latest-section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Latest"
+    },
+    {
+      "type": "range",
+      "id": "initial_count",
+      "label": "Articles shown initially",
+      "info": "Articles beyond this count are hidden behind 'Load more'.",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 6
+    },
+    {
+      "type": "text",
+      "id": "load_more_text",
+      "label": "Load More Button Text",
+      "default": "Load more Articles"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "article",
+      "name": "Article",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Cover Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "How To Style Winter Whites"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category Tag",
+          "default": "Style",
+          "info": "Displayed as a pill tag below the title."
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Article URL",
+          "info": "Makes the entire card clickable."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Latest",
+      "category": "Everlane Stories",
+      "blocks": [
+        { "type": "article", "settings": { "title": "How To Style Winter Whites", "category": "Style" } },
+        { "type": "article", "settings": { "title": "We Won A Glossy Award", "category": "Transparency" } },
+        {
+          "type": "article",
+          "settings": { "title": "Coordinate Your Style: Matching Outfits for Everyone", "category": "Style" }
+        },
+        { "type": "article", "settings": { "title": "Black Friday Fund 2023", "category": "Transparency" } },
+        {
+          "type": "article",
+          "settings": { "title": "What to Wear this Season: Holiday Outfits & Ideas", "category": "Style" }
+        },
+        { "type": "article", "settings": { "title": "Thanksgiving Outfit Ideas", "category": "Style" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

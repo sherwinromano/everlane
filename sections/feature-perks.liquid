@@ -1,0 +1,177 @@
+<div class="fp-section">
+  <div class="fp-inner">
+    <div class="fp-flex">
+      {% for block in section.blocks %}
+        {% if block.type == 'perk' %}
+          <div class="fp-item" {{ block.shopify_attributes }}>
+            <div class="fp-icon-wrap">
+              {% if block.settings.icon != blank %}
+                {{
+                  block.settings.icon
+                  | image_url: width: 120
+                  | image_tag: class: 'fp-icon', loading: 'lazy', alt: block.settings.title
+                }}
+              {% endif %}
+            </div>
+
+            {% if block.settings.title != blank %}
+              <p class="fp-title maison-demi text-primary">{{ block.settings.title }}</p>
+            {% endif %}
+
+            {% if block.settings.description != blank %}
+              <p class="fp-desc maison-demi">{{ block.settings.description }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .fp-section {
+    background: #fff;
+    padding: 90px 77px;
+    width: 100%;
+  }
+
+  .fp-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .fp-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .fp-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .fp-icon-wrap {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: 4px;
+  }
+
+  .fp-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .fp-title {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.42px;
+    margin: 0;
+  }
+
+  .fp-desc {
+    font-size: 14px;
+    font-weight: 200;
+    color: #262626;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 220px;
+  }
+
+  @media (min-width: 640px) {
+    .fp-flex {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .fp-icon-wrap {
+      width: 80px;
+      height: 80px;
+    }
+
+    .fp-item {
+      padding: 0 48px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Feature Perks",
+  "tag": "section",
+  "class": "feature-perks-section",
+  "max_blocks": 4,
+  "limit": 1,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Complimentary Shipping"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Enjoy free shipping on U.S. orders over $100."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature Perks",
+      "category": "Everlane",
+      "blocks": [
+        {
+          "type": "perk",
+          "settings": {
+            "title": "Complimentary Shipping",
+            "description": "Enjoy free shipping on U.S. orders over $100."
+          }
+        },
+        {
+          "type": "perk",
+          "settings": {
+            "title": "Consciously Crafted",
+            "description": "Designed with you and the planet in mind."
+          }
+        },
+        {
+          "type": "perk",
+          "settings": {
+            "title": "Come Say Hi",
+            "description": "We have 11 stores across the U.S."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

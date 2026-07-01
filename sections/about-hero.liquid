@@ -1,0 +1,253 @@
+{%- assign align = section.settings.text_alignment | default: 'center' -%}
+
+<div class="hs-section" id="hs-{{ section.id }}" data-align="{{ align }}">
+  {%- comment -%} Background image {%- endcomment -%}
+  <div class="hs-bg">
+    {% if section.settings.image != blank %}
+      {{
+        section.settings.image
+        | image_url: width: 2400
+        | image_tag:
+          class: 'hs-bg-img',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: section.settings.heading,
+          widths: '800, 1200, 1600, 2000, 2400',
+          sizes: '100vw'
+      }}
+    {% else %}
+      <div class="hs-bg-placeholder">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'hs-placeholder-svg' }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.overlay_opacity > 0 %}
+      <div
+        class="hs-overlay"
+        style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
+      ></div>
+    {% endif %}
+  </div>
+
+  {%- comment -%} Text content {%- endcomment -%}
+  <div class="hs-content">
+    {% if section.settings.heading != blank %}
+      <h2 class="hs-heading maison-book">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.subtext != blank %}
+      <div class="hs-subtext maison-book">{{ section.settings.subtext }}</div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .hs-section {
+    position: relative;
+    width: 100%;
+    /* Tall cinematic ratio — matches the screenshot */
+    min-height: 56vw;
+    min-height: clamp(420px, 56vw, 820px);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* ─── Alignment variants ─── */
+  .hs-section[data-align='left'] {
+    justify-content: flex-start;
+  }
+  .hs-section[data-align='center'] {
+    justify-content: center;
+  }
+  .hs-section[data-align='right'] {
+    justify-content: flex-end;
+  }
+
+  .hs-section[data-align='left'] .hs-content {
+    text-align: left;
+    align-items: flex-start;
+  }
+  .hs-section[data-align='center'] .hs-content {
+    text-align: center;
+    align-items: center;
+  }
+  .hs-section[data-align='right'] .hs-content {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  /* ─── Background layer ─── */
+  .hs-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hs-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hs-bg-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hs-placeholder-svg {
+    width: 20%;
+    height: 20%;
+    opacity: 0.15;
+  }
+
+  .hs-overlay {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    pointer-events: none;
+  }
+
+  /* ─── Content ─── */
+  .hs-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    /* Horizontal padding so content never bleeds to viewport edges */
+    padding: 48px 24px;
+    width: 100%;
+    max-width: 450px;
+  }
+
+  /* Left/right alignment: offset content toward that edge */
+  .hs-section[data-align='left'] .hs-content {
+    padding-left: clamp(24px, 6vw, 96px);
+    padding-right: 24px;
+  }
+  .hs-section[data-align='right'] .hs-content {
+    padding-right: clamp(24px, 6vw, 96px);
+    padding-left: 24px;
+  }
+
+  /* ─── Heading ─── */
+  .hs-heading {
+    font-size: clamp(36px, 6.5vw, 70px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--hs-text-color, #fff);
+    margin: 0;
+  }
+
+  /* ─── Subtext ─── */
+  .hs-subtext {
+    font-size: clamp(16px, 1.5vw, 24px);
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    color: var(--hs-text-color, #fff);
+    opacity: 0.92;
+    margin: 0;
+    /* Tighten max-width so long subtext doesn't sprawl */
+    max-width: 520px;
+  }
+
+  /* Re-align subtext max-width based on alignment */
+  .hs-section[data-align='center'] .hs-subtext {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hs-section[data-align='right'] .hs-subtext {
+    margin-left: auto;
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 639px) {
+    .hs-section {
+      /* On small screens always center so text stays readable */
+      justify-content: center !important;
+      min-height: clamp(320px, 80vw, 520px);
+    }
+
+    .hs-content {
+      text-align: center !important;
+      align-items: center !important;
+      padding: 40px 20px !important;
+    }
+
+    .hs-subtext {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Statement",
+  "tag": "section",
+  "class": "hero-statement-section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Dark Overlay Opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 0,
+      "unit": "%",
+      "info": "Darken the image to improve text legibility. 0 = no overlay."
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "We believe we can all make a difference."
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "<p>Our way: Exceptional quality.</p><p>Ethical factories. Radical Transparency.</p>"
+    },
+
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "category": "Everlane About Page"
+    }
+  ]
+}
+{% endschema %}

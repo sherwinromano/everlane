@@ -1,0 +1,162 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "stories_editorial_header_f9rWC7": {
+      "type": "stories-editorial-header",
+      "name": "Editorial Header",
+      "settings": {
+        "heading": "everworld",
+        "subtext": "We're on a mission to clean up a dirty industry.\nThese are the people, stories, and ideas that will help us get there.",
+        "border_color": "#262626"
+      }
+    },
+    "stories_latest_JxUFjx": {
+      "type": "stories-latest",
+      "blocks": {
+        "article_HVrCYY": {
+          "type": "article",
+          "settings": {
+            "image": "shopify://shop_images/latest-img-1.webp",
+            "title": "How To Style Winter Whites",
+            "category": "Style",
+            "url": "/"
+          }
+        },
+        "article_hfgjFE": {
+          "type": "article",
+          "settings": {
+            "image": "shopify://shop_images/latest-img-2.webp",
+            "title": "We Won A Glossy Award",
+            "category": "Transparency",
+            "url": "/"
+          }
+        },
+        "article_gPEEFD": {
+          "type": "article",
+          "settings": {
+            "image": "shopify://shop_images/latest-img-3.webp",
+            "title": "Coordinate Your Style: Matching Outfits for Everyone",
+            "category": "Style",
+            "url": "/"
+          }
+        },
+        "article_84X4cK": {
+          "type": "article",
+          "settings": {
+            "image": "shopify://shop_images/latest-img-4.webp",
+            "title": "Black Friday Fund 2023",
+            "category": "Transparency",
+            "url": "/"
+          }
+        },
+        "article_dQ7F3T": {
+          "type": "article",
+          "settings": {
+            "image": "shopify://shop_images/latest-img-5.webp",
+            "title": "What to Wear this Season: Holiday Outfits & Ideas",
+            "category": "Style",
+            "url": "/"
+          }
+        },
+        "article_gr3Ycj": {
+          "type": "article",
+          "settings": {
+            "image": "shopify://shop_images/latest-img-6.webp",
+            "title": "Thanksgiving Outfit Ideas",
+            "category": "Style",
+            "url": "/"
+          }
+        }
+      },
+      "block_order": [
+        "article_HVrCYY",
+        "article_hfgjFE",
+        "article_gPEEFD",
+        "article_84X4cK",
+        "article_dQ7F3T",
+        "article_gr3Ycj"
+      ],
+      "name": "The Latest",
+      "settings": {
+        "heading": "The Latest",
+        "initial_count": 6,
+        "load_more_text": "Load more Articles"
+      }
+    },
+    "stories_progress_gHQabU": {
+      "type": "stories-progress",
+      "blocks": {
+        "card_bYnfga": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/progress-img-1.webp",
+            "label": "Carbon Commitment",
+            "url": "/"
+          }
+        },
+        "card_RwTaFA": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/progress-img-2.webp",
+            "label": "Environmental Initiatives",
+            "url": "/"
+          }
+        },
+        "card_6EmdpL": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/progress-img-3.webp",
+            "label": "Better Factories",
+            "url": "/"
+          }
+        }
+      },
+      "block_order": [
+        "card_bYnfga",
+        "card_RwTaFA",
+        "card_6EmdpL"
+      ],
+      "name": "Our Progress",
+      "settings": {
+        "heading": "Our Progress"
+      }
+    },
+    "stories_social_follow_iD93wj": {
+      "type": "stories-social-follow",
+      "name": "Social Follow Banner",
+      "settings": {
+        "heading": "Follow us on social for more",
+        "btn_text": "@Everlane Instagram",
+        "btn_url": "/",
+        "bg_color": "#000000",
+        "heading_color": "#ffffff",
+        "btn_bg_color": "#ffffff",
+        "btn_text_color": "#111111",
+        "btn_border_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "stories_editorial_header_f9rWC7",
+    "stories_latest_JxUFjx",
+    "stories_progress_gHQabU",
+    "stories_social_follow_iD93wj"
+  ]
+}

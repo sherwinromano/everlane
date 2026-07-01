@@ -1,0 +1,121 @@
+.mobile-facets__open,
+.mobile-facets__heading.medium-hide.large-up-hide,
+.mobile-facets__count,
+.mobile-facets__summary.focus-inset,
+.facet-filters__field,
+.facet-filters__label.caption-large.text-body,
+.facet-filters__sort.select__select.caption-large,
+.product-count__text.text-body,
+.mobile-facets__main.has-submenu.gradient,
+.mobile-facets__submenu.gradient,
+#FacetsWrapperDesktop,
+.facets__heading.facets__heading--vertical.caption-large.text-body,
+.pagination__item,
+.caption-large.light {
+  font-family: "maison-book", sans-serif;
+}
+
+.facet-filters__sort.select__select.caption-large {
+  border: 0;
+  outline: none;
+  padding-block: 4px;
+  border-bottom: 1px solid #25252550;
+}
+
+.facets-vertical-form {
+  display: flex;
+  align-items: center;
+}
+
+.facets-vertical {
+  flex-direction: column;
+  padding-inline: 25px;
+}
+
+.card__information {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.card__information > .card-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-wrapper > .card-information {
+  width: auto;
+}
+
+.full-unstyled-link {
+  font-family: "maison-book", sans-serif;
+  font-size: clamp(1.2rem, 1.1rem + 0.4vw, 1.55rem);
+}
+
+.card-information > .price {
+  margin: 0 !important;
+  font-family: "maison-demi", sans-serif;
+  color: #262626;
+}
+
+.card-product__sizes .caption-large {
+  display: block;
+}
+
+.caption-large.light {
+  color: #252525;
+}
+
+.page-width > .product {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-inline: 24px;
+}
+
+.grid__item.product__media-wrapper {
+  width: 100% !important;
+}
+
+.product__info-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.product-form__submit {
+  margin: 0 !important;
+  background-color: #252525 !important;
+  color: #fff;
+  text-transform: uppercase;
+  padding-block: 18px;
+}
+
+.product-form__submit:hover {
+  border: 0 !important;
+  outline: none !important;
+}
+
+@media screen and (min-width: 800px) {
+  .page-width > .product {
+    flex-direction: row;
+  }
+
+  .grid__item.product__media-wrapper {
+    width: 50% !important;
+  }
+
+  .product__info-wrapper {
+    width: 50% !important;
+    padding-left: 5rem !important;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .facets-vertical {
+    flex-direction: row;
+    padding-inline: 0;
+    margin-top: 3rem;
+  }
+}

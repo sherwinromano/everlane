@@ -1,0 +1,179 @@
+<footer class="bg-[#F5F4F4] w-full">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 pt-14 pb-8">
+    <div class="flex flex-col lg:flex-row">
+      <div class="grid! grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10 lg:gap-8 mb-12 basis-full">
+        {% render 'footer-column' with heading: section.settings.account_heading, menu: section.settings.account_menu, class: 'maison-book', spacing: 'space-y-3.5' %}
+
+        {% render 'footer-column' with heading: section.settings.company_heading, menu: section.settings.company_menu, class: 'maison-book', spacing: 'space-y-[14px]' %}
+
+        {% render 'footer-column' with heading: section.settings.help_heading, menu: section.settings.help_menu, class: 'maison-book', spacing: 'space-y-[14px]' %}
+
+        {% render 'footer-column' with heading: section.settings.connect_heading, menu: section.settings.connect_menu, class: 'maison-book', spacing: 'space-y-[14px]' %}
+      </div>
+      <div class="w-full lg:w-1/2 mb-12">
+        {% form 'customer', id: 'footer-newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="flex border border-gray-300 bg-white overflow-hidden">
+            <input
+              type="email"
+              name="contact[email]"
+              placeholder="{{ section.settings.newsletter_placeholder }}"
+              autocomplete="email"
+              class="flex-1 min-w-0 px-4 py-4.5 text-[13px] text-gray-700 placeholder-gray-400 bg-transparent outline-none"
+              required
+            >
+            <button
+              type="submit"
+              aria-label="Subscribe"
+              class="w-24 shrink-0 flex items-center justify-center bg-black text-white hover:bg-gray-800 transition-colors duration-200"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+          {%- if form.posted_successfully? -%}
+            <p class="mt-3 text-xs text-green-600">Thanks for subscribing!</p>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <p class="mt-3 text-xs text-red-500">{{ form.errors.messages.email }}</p>
+          {%- endif -%}
+        {% endform %}
+      </div>
+    </div>
+
+    <div class="flex flex-col pt-6">
+      <div class="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-4">
+        {% for link in linklists[section.settings.legal_menu].links %}
+          <a
+            href="{{ link.url }}"
+            class="text-[14px] text-gray-500 hover:text-black transition-colors duration-200 whitespace-nowrap"
+          >
+            {{ link.title }}
+          </a>
+        {% endfor %}
+      </div>
+
+      <p class="text-center text-[14px] text-gray-500">
+        {% if section.settings.copyright_text != blank %}
+          {{ section.settings.copyright_text }}
+        {% else %}
+          &copy; {{ 'now' | date: '%Y' }}
+          {{ shop.name }}. All Rights Reserved.
+        {% endif %}
+      </p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "section",
+  "class": "custom-footer",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Account Column"
+    },
+    {
+      "type": "text",
+      "id": "account_heading",
+      "label": "Column Heading",
+      "default": "Account"
+    },
+    {
+      "type": "link_list",
+      "id": "account_menu",
+      "label": "Account Menu"
+    },
+    {
+      "type": "header",
+      "content": "Company Column"
+    },
+    {
+      "type": "text",
+      "id": "company_heading",
+      "label": "Column Heading",
+      "default": "Company"
+    },
+    {
+      "type": "link_list",
+      "id": "company_menu",
+      "label": "Company Menu"
+    },
+    {
+      "type": "header",
+      "content": "Get Help Column"
+    },
+    {
+      "type": "text",
+      "id": "help_heading",
+      "label": "Column Heading",
+      "default": "Get Help"
+    },
+    {
+      "type": "link_list",
+      "id": "help_menu",
+      "label": "Get Help Menu"
+    },
+    {
+      "type": "header",
+      "content": "Connect Column"
+    },
+    {
+      "type": "text",
+      "id": "connect_heading",
+      "label": "Column Heading",
+      "default": "Connect"
+    },
+    {
+      "type": "link_list",
+      "id": "connect_menu",
+      "label": "Connect Menu"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "label": "Input Placeholder",
+      "default": "Email Address"
+    },
+    {
+      "type": "header",
+      "content": "Legal & Copyright"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal Links Menu"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "info": "Leave blank to auto-generate with shop name and current year."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "category": "Everlane"
+    }
+  ]
+}
+{% endschema %}

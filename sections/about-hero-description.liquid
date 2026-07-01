@@ -1,0 +1,67 @@
+<div class="hd-section" id="hd-{{ section.id }}">
+  {% if section.settings.description != blank %}
+    <p class="hd-subtext maison-book">{{ section.settings.description }}</p>
+  {% endif %}
+</div>
+
+<style>
+  .hd-section {
+    display: grid;
+    place-items: center;
+    padding: 75px;
+  }
+
+  .hd-subtext {
+    font-size: clamp(1.67rem, 2vw, 38px);
+    line-height: 40px;
+    text-align: center;
+    color: #000;
+  }
+
+  @media (min-width: 768px) {
+    .hd-section {
+      padding: 75px 158px;
+    }
+
+    .hd-subtext {
+      line-height: 50px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hd-section {
+      padding: 75px 258px;
+    }
+
+    .hd-subtext {
+      max-width: 884px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Description",
+  "tag": "section",
+  "class": "hero-description-section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero description"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "At Everlane, we want the right choice to be as easy as putting on a great T-shirt. That's why we partner with the best, ethical factories around the world. Source only the finest materials. And share those stories with you — down to the true cost of every product we make. It's a new way of doing things. We call it Radical Transparency."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Description",
+      "category": "Everlane About Page"
+    }
+  ]
+}
+{% endschema %}

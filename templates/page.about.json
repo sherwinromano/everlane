@@ -1,0 +1,138 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "about_hero_637wyi": {
+      "type": "about-hero",
+      "name": "Hero",
+      "settings": {
+        "image": "shopify://shop_images/Section_01.webp",
+        "overlay_opacity": 0,
+        "heading": "We believe we can all make a difference.",
+        "subtext": "<p>Our way: Exceptional quality.</p><p>Ethical factories. Radical Transparency.</p>",
+        "text_alignment": "center"
+      }
+    },
+    "about_hero_description_E6XP7z": {
+      "type": "about-hero-description",
+      "name": "Hero Description",
+      "settings": {
+        "description": "At Everlane, we want the right choice to be as easy as putting on a great T-shirt. That's why we partner with the best, ethical factories around the world. Source only the finest materials. And share those stories with you — down to the true cost of every product we make. It's a new way of doing things. We call it Radical Transparency."
+      }
+    },
+    "about_image_text_split_ekUYBL": {
+      "type": "about-image-text-split",
+      "name": "Image + Text Split",
+      "settings": {
+        "image": "shopify://shop_images/image.webp",
+        "image_alignment": "left",
+        "label": "Our Factories",
+        "heading": "Our ethical approach.",
+        "body": "<p>We spend months finding the best factories around the world—the same ones that produce your favorite designer labels. We visit them often and build strong personal relationships with the owners.</p>",
+        "text_bg_color": "#e6ded8"
+      }
+    },
+    "about_wallpaper_image_NbJpbc": {
+      "type": "about-wallpaper-image",
+      "name": "Wallpaper Image",
+      "settings": {
+        "image": "shopify://shop_images/image-1.webp"
+      }
+    },
+    "about_image_text_split_CF94EV": {
+      "type": "about-image-text-split",
+      "name": "Image + Text Split",
+      "settings": {
+        "image": "shopify://shop_images/image-3.webp",
+        "image_alignment": "right",
+        "label": "Our Quality",
+        "heading": "Designed to last.",
+        "body": "<p>At Everlane, we’re not big on trends. We want you to wear our pieces for years, even decades, to come. That’s why we source the finest materials and factories for our timeless products — like our Grade-A cashmere sweaters, Italian shoes, and Peruvian Pima tees.</p>",
+        "text_bg_color": "#e6ded8"
+      }
+    },
+    "about_wallpaper_image_eUwrAJ": {
+      "type": "about-wallpaper-image",
+      "name": "Wallpaper Image",
+      "settings": {
+        "image": "shopify://shop_images/image-2.webp"
+      }
+    },
+    "about_image_text_split_KCUwpC": {
+      "type": "about-image-text-split",
+      "name": "Image + Text Split",
+      "settings": {
+        "image": "shopify://shop_images/graph.webp",
+        "image_alignment": "left",
+        "label": "Our Prices",
+        "heading": "Radically Transparent.",
+        "body": "<p>We believe our customers have a right to know how much their clothes cost to make. We reveal the true costs behind all of our products — from materials to labor to transportation — then offer them to you, minus the traditional retail markup.</p>",
+        "text_bg_color": "#ffffff"
+      }
+    },
+    "about_more_to_explore_EHmmi4": {
+      "type": "about-more-to-explore",
+      "blocks": {
+        "card_MP4Xcy": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/explore-img-1.webp",
+            "label": "Our Products",
+            "url": "shopify://collections/all"
+          }
+        },
+        "card_jHBBLL": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/explore-img-2.webp",
+            "label": "Our Stores",
+            "url": "shopify://pages/about"
+          }
+        },
+        "card_crbREw": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/explore-img-3.webp",
+            "label": "Careers",
+            "url": "shopify://pages/about"
+          }
+        }
+      },
+      "block_order": [
+        "card_MP4Xcy",
+        "card_jHBBLL",
+        "card_crbREw"
+      ],
+      "name": "More to Explore",
+      "settings": {
+        "heading": "More to Explore"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "about_hero_637wyi",
+    "about_hero_description_E6XP7z",
+    "about_image_text_split_ekUYBL",
+    "about_wallpaper_image_NbJpbc",
+    "about_image_text_split_CF94EV",
+    "about_wallpaper_image_eUwrAJ",
+    "about_image_text_split_KCUwpC",
+    "about_more_to_explore_EHmmi4"
+  ]
+}
