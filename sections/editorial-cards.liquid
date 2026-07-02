@@ -5,7 +5,7 @@
         {% if block.type == 'card' %}
           <div class="ec-slide" {{ block.shopify_attributes }}>
             {% if block.settings.heading != blank %}
-              <h3 class="ec-heading">{{ block.settings.heading }}</h3>
+              <h3 class="ec-heading maison-book">{{ block.settings.heading }}</h3>
             {% endif %}
 
             <div class="ec-img-wrap">
@@ -28,10 +28,10 @@
 
             <div class="ec-body">
               {% if block.settings.subtext != blank %}
-                <p class="ec-subtext">{{ block.settings.subtext }}</p>
+                <p class="ec-subtext maison-book">{{ block.settings.subtext }}</p>
               {% endif %}
               {% if block.settings.cta_text != blank and block.settings.cta_url != blank %}
-                <a href="{{ block.settings.cta_url }}" class="ec-cta">
+                <a href="{{ block.settings.cta_url }}" class="ec-cta maison-book">
                   {{ block.settings.cta_text }}
                 </a>
               {% endif %}
@@ -165,8 +165,8 @@
   }
 
   .ec-subtext {
-    font-size: 13px;
-    color: #374151;
+    font-size: 14px;
+    color: #262626;
     line-height: 1.6;
     letter-spacing: 0.03em;
     margin: 0;
@@ -175,7 +175,7 @@
   .ec-cta {
     display: inline-block;
     font-size: 13px;
-    color: #111;
+    color: #262626;
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 1px;

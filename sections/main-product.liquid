@@ -215,7 +215,11 @@
                 </p>
               {%- when 'description' -%}
                 {%- if product.description != blank -%}
-                  <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
+                  <div
+                    class="product__description rte quick-add-hidden maison-book"
+                    {{ block.shopify_attributes }}
+                    style="color: #000;"
+                  >
                     {{ product.description }}
                   </div>
                 {%- endif -%}
@@ -261,7 +265,7 @@
                     | item_count_for_variant: product.selected_or_first_available_variant.id
                   -%}
                   {% # theme-check-enable %}
-                  <span class="visually-hidden" id="quantity-label-{{ section.id }}">
+                  <span class="visually-hidden maison-book" id="quantity-label-{{ section.id }}">
                     {%- if cart_qty > 0 -%}
                       {{- 'products.product.quantity.in_cart_aria_label' | t: quantity: cart_qty -}}
                     {%- else -%}
@@ -269,9 +273,10 @@
                     {%- endif -%}
                   </span>
                   <label
-                    class="quantity__label form__label"
+                    class="quantity__label form__label maison-demi"
                     for="Quantity-{{ section.id }}"
                     aria-labelledby="quantity-label-{{ section.id }}"
+                    style="color: #000;"
                   >
                     <span aria-hidden="true">{{ 'products.product.quantity.label' | t }}</span>
                     <span class="quantity__rules-cart{% if cart_qty == 0 %} hidden{% endif %}" aria-hidden="true">
@@ -294,7 +299,7 @@
                         </span>
                       </button>
                       <input
-                        class="quantity__input"
+                        class="quantity__input maison-book"
                         type="number"
                         name="quantity"
                         id="Quantity-{{ section.id }}"
@@ -507,6 +512,7 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+                {%- render 'product-perks' -%}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -818,6 +824,10 @@
     border-radius: 2px;
     width: fit-content;
   }
+
+  .product-form__buttons {
+    max-width: 100% !important;
+  }
 {% endstyle %}
 
 {% schema %}
@@ -865,6 +875,42 @@
       "type": "custom_title_price",
       "name": "Title + Price",
       "limit": 1
+    },
+    {
+      "type": "perk",
+      "name": "Perk Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon",
+          "info": "Recommended: SVG or PNG with transparent background."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "On all U.S. orders over $100"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Inline Link Text",
+          "default": "Learn more.",
+          "info": "Appears inline after the subtext. Leave blank to hide."
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Inline Link URL"
+        }
+      ]
     },
     {
       "type": "title",

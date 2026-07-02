@@ -1,0 +1,118 @@
+<div class="perks">
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'perk' -%}
+      <div class="perks__item" {{ block.shopify_attributes }}>
+        <div class="perks__icon-wrap">
+          {%- if block.settings.icon != blank -%}
+            {{
+              block.settings.icon
+              | image_url: width: 96
+              | image_tag:
+                class: 'perks__icon',
+                alt: block.settings.label,
+                loading: 'lazy',
+                widths: '48, 72, 96',
+                sizes: '24px'
+            }}
+          {%- endif -%}
+        </div>
+
+        <div class="perks__body">
+          {%- if block.settings.label != blank -%}
+            <p class="perks__label maison-demi">{{ block.settings.label }}</p>
+          {%- endif -%}
+          {%- if block.settings.subtext != blank -%}
+            <p class="perks__subtext maison-book">
+              {{ block.settings.subtext }}
+              {%- if block.settings.link_text != blank and block.settings.link_url != blank -%}
+                <a href="{{ block.settings.link_url }}" class="perks__link">
+                  {{- block.settings.link_text -}}
+                </a>
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{% style %}
+  /* =============================================
+     BLOCK: perks
+     Architecture: BEM
+  ============================================= */
+
+  .perks {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 24px;
+    padding-top: 4px;
+  }
+
+  /* ── Element: item ── */
+  .perks__item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-top: 1px solid #dddbdc;
+  }
+
+  /* ── Element: icon-wrap ── */
+  .perks__icon-wrap {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  /* ── Element: icon ── */
+  .perks__icon {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* ── Element: body ── */
+  .perks__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* ── Element: label ── */
+  .perks__label {
+    font-size: 14px;
+    color: #000;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ── Element: subtext ── */
+  .perks__subtext {
+    font-size: 13px;
+    color: #000;
+    margin: 0;
+  }
+
+  /* ── Element: link ── */
+  .perks__link {
+    color: #111;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+
+  .perks__link:hover {
+    opacity: 0.5;
+  }
+{% endstyle %}

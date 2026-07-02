@@ -12,13 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
         "custom_title_price": {
           "type": "custom_title_price",
           "settings": {}
@@ -52,17 +45,44 @@
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
           }
+        },
+        "perk_1": {
+          "type": "perk",
+          "settings": {
+            "label": "Free Shipping",
+            "subtext": "On all U.S. orders over $100",
+            "link_text": "Learn more.",
+            "link_url": "/pages/shipping"
+          }
+        },
+        "perk_2": {
+          "type": "perk",
+          "settings": {
+            "label": "Easy Returns",
+            "subtext": "Extended returns through January 31.",
+            "link_text": "Returns Details.",
+            "link_url": "/pages/returns"
+          }
+        },
+        "perk_3": {
+          "type": "perk",
+          "settings": {
+            "label": "Send It As A Gift",
+            "subtext": "Add a free personalized note during checkout."
+          }
         }
       },
       "block_order": [
-        "vendor",
         "custom_title_price",
         "title",
         "description",
         "price",
         "variant_picker",
         "quantity_selector",
-        "buy_buttons"
+        "buy_buttons",
+        "perk_1",
+        "perk_2",
+        "perk_3"
       ],
       "settings": {
         "enable_sticky_info": true,
@@ -83,7 +103,7 @@
     "related-products": {
       "type": "related-products",
       "settings": {
-        "heading": "You may also like",
+        "heading": "Recommended Products",
         "heading_size": "h2",
         "products_to_show": 4,
         "columns_desktop": 4,
